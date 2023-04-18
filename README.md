@@ -1,19 +1,19 @@
 # zsh-auto-pnpm-use
 
-`zsh-auto-pnpm-use` is a zsh plugin that automatically loads the node version specified in `.npmrc` or `.nvmrc`.
-
-> `.npmrc` example:
-
-```shell
-node-version=18.16.0
-```
-
-or
+`zsh-auto-pnpm-use` is a zsh plugin that automatically loads the node version specified in `.nvmrc` or `.npmrc`.
 
 > `.nvmrc` example:
 
 ```shell
 18.16.0
+```
+
+or
+
+> `.npmrc` example:
+
+```shell
+node-version=18.16.0
 ```
 
 ## Installation

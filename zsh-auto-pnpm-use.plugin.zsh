@@ -8,7 +8,6 @@ load-pnpmrc() {
   local global_node_version=$(node --version)
   global_node_version=${global_node_version/v/}
 
-  local npmrc_file=".npmrc"
   local nvmrc_file=".nvmrc"
   local default_node_version=$(pnpm config get use-node-version)
   local local_node_version=$(pnpm config get node-version)
