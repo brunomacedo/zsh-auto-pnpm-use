@@ -32,6 +32,5 @@ plugins=(
   # git
   # zsh-autosuggestions
   zsh-auto-pnpm-use
-  # zsh-auto-nvm-use
 )
 ```
