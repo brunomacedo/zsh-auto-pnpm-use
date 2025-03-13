@@ -8,6 +8,8 @@ load-pnpmrc() {
   local global_node_version=$(node --version)
   global_node_version=${global_node_version/v/}
 
+  # Any problem replace or chance use-node-version
+  # Library/Preferences/pnpm/rc
   # Need to be set before get it.
   # pnpm config set use-node-version $global_node_version
   # pnpm config set node-version ""
