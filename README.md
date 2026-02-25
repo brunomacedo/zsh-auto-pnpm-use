@@ -48,42 +48,36 @@
 
 ## First Time Setup
 
-On the first terminal session after installing the plugin, the PNPM configuration for Node.js versions may not exist yet. You need to initialize it manually:
+On the first terminal session after installing the plugin, the PNPM configuration for Node.js versions may not exist yet. Initialize it manually:
 
-1. **Set your default Node.js version for PNPM:**
+1. **Set PNPM's default Node.js version (the plugin uses `default-node-version`):**
 
   ```sh
-  pnpm config set use-node-version $(node --version | sed 's/v//')
-  pnpm config set node-version ""
+  pnpm config set default-node-version "$(node --version)"
   ```
 
 2. **Open a new terminal or run `source ~/.zshrc` again.**
 
 ## How It Works
 
-When you enter a directory, the plugin checks for a `.nvmrc` or `.npmrc` file:
+When you enter a directory, the plugin checks for a `.nvmrc` file:
 
 - If `.nvmrc` exists, it uses the Node.js version specified in that file.
-- If `.npmrc` contains a `node-version=...` line, it uses that version.
-- If neither is found, it uses the default Node.js version set in PNPM.
+- If no `.nvmrc` is present, it falls back to PNPM's `default-node-version` setting.
+
+Note: the plugin currently does not parse `node-version` from `.npmrc` files.
 
 ### Example `.nvmrc` file:
 
 ```
-18.16.0
-```
-
-### Example `.npmrc` file:
-
-```
-node-version=18.16.0
+25.7.0
 ```
 
 ## Troubleshooting
 
 - Make sure you do not have NVM or other Node.js managers installed.
 - Only the PNPM installed via the official curl script supports Node.js version management.
-- If you see errors about missing Node.js versions, check your `.nvmrc` or `.npmrc` files and your PNPM config.
+- If you see errors about missing Node.js versions, check your `.nvmrc` file and your PNPM config.
 
 ## Uninstalling
 
