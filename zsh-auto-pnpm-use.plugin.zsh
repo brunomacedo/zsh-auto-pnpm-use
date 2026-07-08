@@ -1,5 +1,13 @@
 autoload -Uz add-zsh-hook
 
+# Remembers the "default" (system) Node.js version for the current shell
+# session. We no longer rely on `pnpm config set/get default-node-version`
+# because pnpm stopped accepting that key in the global config.yaml (and it
+# is not a documented/supported pnpm-workspace.yaml key either) — see
+# https://pnpm.io/settings. Using a plain shell variable avoids the
+# "ERR_PNPM_CONFIG_SET_UNSUPPORTED_YAML_CONFIG_KEY" warning entirely.
+typeset -g AUTO_PNPM_DEFAULT_NODE_VERSION=""
+
 load-pnpmrc() {
   if (( ! $+commands[pnpm] )); then
     return
@@ -8,13 +16,12 @@ load-pnpmrc() {
   local global_node_version=$(node --version)
   global_node_version=${global_node_version/v/}
 
-  # Any problem replace or chance default-node-version
-  # On MacOS: ~/Library/Preferences/pnpm/rc
-  # On Linux: ~/.config/pnpm/rc
-  pnpm config set default-node-version "$global_node_version" > /dev/null
+  if [[ -z "$AUTO_PNPM_DEFAULT_NODE_VERSION" ]]; then
+    AUTO_PNPM_DEFAULT_NODE_VERSION="$global_node_version"
+  fi
 
   local nvmrc_file=".nvmrc"
-  local default_node_version="$(pnpm config get default-node-version)"
+  local default_node_version="$AUTO_PNPM_DEFAULT_NODE_VERSION"
   local local_node_version=""
 
   if [[ -z "$local_node_version" && -f "$nvmrc_file" && -r "$nvmrc_file" ]]; then
